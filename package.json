@@ -1,0 +1,36 @@
+{
+  "name": "reacticsearch",
+  "version": "0.0.1",
+  "private": true,
+  "author": "BenjaminFaal",
+  "description": "reacticsearch is a combination of React and Elasticsearch to build Search UI's",
+  "repository": "http://github.com/BenjaminFaal/reacticsearch",
+  "main": "lib/index.js",
+  "dependencies": {
+    "@types/deep-equal": "^1.0.1",
+    "@types/elasticsearch": "^5.0.28",
+    "@types/jest": "^23.3.8",
+    "@types/qs": "^6.5.1",
+    "@types/react": "^16.4.18",
+    "@types/react-dom": "^16.0.9",
+    "deep-equal": "^1.0.1",
+    "elasticsearch-browser": "^15.2.0",
+    "qs": "^6.5.2",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "react-scripts-ts": "^3.1.0",
+    "validator": "^10.8.0"
+  },
+  "devDependencies": {
+    "awesome-typescript-loader": "^5.2.1",
+    "source-map-loader": "^0.2.4",
+    "typescript": "^3.1.4"
+  },
+  "scripts": {
+    "build": "rm -rf lib && NODE_ENV=production tsc",
+    "postinstall": "yarn build",
+    "test": "react-scripts-ts test",
+    "build-example": "react-scripts-ts build",
+    "start": "react-scripts-ts start"
+  }
+}
