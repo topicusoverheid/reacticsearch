@@ -1,10 +1,10 @@
 {
   "name": "reacticsearch",
   "version": "0.0.1",
-  "private": true,
+  "private": false,
   "author": "BenjaminFaal",
   "description": "reacticsearch is a combination of React and Elasticsearch to build Search UI's",
-  "repository": "http://github.com/BenjaminFaal/reacticsearch",
+  "repository": "http://github.com/topicusoverheid/reacticsearch",
   "main": "lib/index.js",
   "dependencies": {
     "@types/deep-equal": "^1.0.1",
