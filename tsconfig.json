@@ -13,7 +13,10 @@
       "dom"
     ],
     "allowJs": true,
-    "baseUrl": "src/index.tsx"
+    "baseUrl": "src/index.tsx",
+    "types": [
+      "node"
+    ]
   },
   "include": [
     "src"
