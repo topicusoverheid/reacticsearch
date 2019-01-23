@@ -8,24 +8,28 @@
   "main": "lib/index.js",
   "dependencies": {
     "@types/deep-equal": "^1.0.1",
-    "@types/elasticsearch": "^5.0.28",
-    "@types/jest": "^23.3.8",
-    "@types/node": "^10.12.15",
+    "@types/elasticsearch": "^5.0.30",
+    "@types/jest": "^23.3.13",
+    "@types/node": "^10.12.18",
     "@types/qs": "^6.5.1",
-    "@types/react": "^16.4.18",
-    "@types/react-dom": "^16.0.9",
+    "@types/react": "^16.7.20",
+    "@types/react-dom": "^16.0.11",
     "deep-equal": "^1.0.1",
-    "elasticsearch-browser": "^15.2.0",
-    "qs": "^6.5.2",
-    "react": "^16.6.0",
-    "react-dom": "^16.6.0",
-    "react-scripts-ts": "^3.1.0",
-    "validator": "^10.8.0"
+    "elasticsearch-browser": "^15.3.0",
+    "qs": "^6.6.0",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "react-scripts-ts": "^4.0.8",
+    "validator": "^10.11.0"
+  },
+  "resolutions": {
+    "@types/react": "^16.7.20",
+    "@types/react-dom": "^16.0.11"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^5.2.1",
     "source-map-loader": "^0.2.4",
-    "typescript": "^3.1.4"
+    "typescript": "^3.2.4"
   },
   "scripts": {
     "build": "rm -rf lib && NODE_ENV=production tsc",
@@ -33,5 +37,11 @@
     "test": "react-scripts-ts test",
     "build-example": "react-scripts-ts build",
     "start": "react-scripts-ts start"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
