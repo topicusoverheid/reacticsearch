@@ -39,8 +39,11 @@ class Indices extends ElasticsearchComponent<IndicesProps, ElasticsearchComponen
             <select onChange={event => {
                 var item = items[event.target.value];
 
-                this.props.onSelect(item.index, item.type, item.mapping);
+                if (item) {
+                    this.props.onSelect(item.index, item.type, item.mapping);
+                }
             }}>
+                <option selected/>
                 {
                     items.map((item, index) => {
                         return (
