@@ -11,6 +11,7 @@ import SelectedFilters from "./SelectedFilters";
 import Loading from "./Loading";
 import Error from "./Error";
 import Indices from "./Indices";
+import NodeInfo from "./NodeInfo";
 import InlineQueryComponent from "../InlineQueryComponent";
 import InlineDocumentComponent from "../InlineDocumentComponent";
 
@@ -25,6 +26,7 @@ const SORTS = [
 ];
 
 interface ExampleState {
+    host: string
     index?: string,
     type?: string,
     fields: object,
@@ -60,6 +62,7 @@ class Example extends React.Component<object, ExampleState> {
         super(props);
 
         this.state = {
+            host: window.location.host,
             index: undefined,
             type: undefined,
             fields: {},
@@ -81,10 +84,16 @@ class Example extends React.Component<object, ExampleState> {
         var fields = this.getFields();
         return (
             <div>
-                <div style={{float: 'right'}}>
+                <h1>Host</h1>
+                <input value={this.state.host} onChange={event => {
+                    this.setState({host: event.currentTarget.value});
+                }}/>
+                <br/>
+                <NodeInfo host={this.state.host}/>
+                <div>
                     Index/Type
                     <br/>
-                    <Indices host="localhost:9200" onSelect={(index, type, fields) => {
+                    <Indices host={this.state.host} onSelect={(index, type, fields) => {
                         var textAggregationField;
 
                         var keys = Object.keys(fields);
@@ -111,7 +120,6 @@ class Example extends React.Component<object, ExampleState> {
                     this.state.index && this.state.type &&
                     <ReacticSearch
                         ref={reacticsearch => this.reacticsearch = reacticsearch}
-                        host="localhost:9200"
                         index={this.state.index}
                         type={this.state.type}
                         debug
@@ -248,7 +256,6 @@ class Example extends React.Component<object, ExampleState> {
                                 Document view: {this.state.documentId!}
                             </h1>
                             <InlineDocumentComponent
-                                host="http://localhost:9200"
                                 index={this.state.index}
                                 type={this.state.type}
                                 documentId={this.state.documentId!}
