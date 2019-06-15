@@ -14,6 +14,7 @@ import Indices from "./Indices";
 import NodeInfo from "./NodeInfo";
 import InlineQueryComponent from "../InlineQueryComponent";
 import InlineDocumentComponent from "../InlineDocumentComponent";
+import ElasticsearchComponent from "../ElasticsearchComponent";
 
 const SORTS = [
     new SortItem('Relevance', undefined),
@@ -68,6 +69,11 @@ class Example extends React.Component<object, ExampleState> {
             fields: {},
             aggregationField: '',
             documentId: undefined,
+        };
+
+        // Log Elasticsearch requests
+        ElasticsearchComponent.defaultProps.onRequest = (params, options) => {
+            console.log('Elasticsearch request:', params, options);
         };
     }
 

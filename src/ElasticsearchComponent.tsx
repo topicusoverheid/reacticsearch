@@ -6,6 +6,8 @@ export interface ElasticsearchComponentProps {
     host: string,
     // https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/configuration.html#config-options
     clientProps?: ConfigOptions,
+    requestHeaders?: object,
+    onRequest?: (params: object, options: object) => void,
     onResult?: (result: any) => void,
     onError?: (error: any) => void,
     onLoadingChange?: (loading: boolean) => void,
@@ -38,14 +40,25 @@ abstract class ElasticsearchComponent<P extends ElasticsearchComponentProps, S e
         this.client = this.createClient();
     }
 
-    private createClient(props = this.props) : Client {
-        return new Client(
+    private createClient(props = this.props): Client {
+        const client = new Client(
             {
                 // @ts-ignore
                 ...props.clientProps,
                 host: props.host,
             }
         );
+
+        const requestFunction = client.transport.request;
+        client.transport.request = (params, options, cb) => {
+            if (props.requestHeaders) {
+                params.headers = props.requestHeaders;
+            }
+            props.onRequest && props.onRequest(params, options);
+            return requestFunction.bind(client.transport)(params, options, cb);
+        };
+
+        return client;
     }
 
     componentDidMount() {
