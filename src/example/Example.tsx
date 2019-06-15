@@ -75,6 +75,9 @@ class Example extends React.Component<object, ExampleState> {
         ElasticsearchComponent.defaultProps.onRequest = (params, options) => {
             console.log('Elasticsearch request:', params, options);
         };
+
+        // Set Elasticsearch request headers
+        ElasticsearchComponent.defaultProps.requestHeaders = {Authorization: 'password'};
     }
 
     getFields() {

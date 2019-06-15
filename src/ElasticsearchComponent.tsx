@@ -1,12 +1,13 @@
 import * as React from "react";
 
 import {Client, ConfigOptions} from "elasticsearch-browser";
+import {OutgoingHttpHeaders} from "http";
 
 export interface ElasticsearchComponentProps {
     host: string,
     // https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/configuration.html#config-options
     clientProps?: ConfigOptions,
-    requestHeaders?: object,
+    requestHeaders?: OutgoingHttpHeaders,
     onRequest?: (params: object, options: object) => void,
     onResult?: (result: any) => void,
     onError?: (error: any) => void,
