@@ -35,17 +35,29 @@ abstract class ElasticsearchComponent<P extends ElasticsearchComponentProps, S e
             result: undefined,
         };
 
-        this.client = new Client(
+        this.client = this.createClient();
+    }
+
+    private createClient(props = this.props) : Client {
+        return new Client(
             {
                 // @ts-ignore
-                ...this.props.clientProps,
-                host: this.props.host,
+                ...props.clientProps,
+                host: props.host,
             }
         );
     }
 
     componentDidMount() {
         this.update();
+    }
+
+    componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
+        if (this.props !== nextProps) {
+            this.client.close();
+            this.client = this.createClient(nextProps);
+            this.update(nextProps);
+        }
     }
 
     abstract request(props: P): Promise<any>;
