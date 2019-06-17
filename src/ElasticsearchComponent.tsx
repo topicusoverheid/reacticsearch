@@ -41,7 +41,7 @@ abstract class ElasticsearchComponent<P extends ElasticsearchComponentProps, S e
         this.client = this.createClient();
     }
 
-    private createClient(props = this.props): Client {
+    protected createClient(props : P = this.props): Client {
         const client = new Client(
             {
                 // @ts-ignore
@@ -67,7 +67,7 @@ abstract class ElasticsearchComponent<P extends ElasticsearchComponentProps, S e
     }
 
     componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
-        if (this.props !== nextProps) {
+        if (this.props.host !== nextProps.host || this.props.clientProps !== nextProps.clientProps) {
             this.client.close();
             this.client = this.createClient(nextProps);
             this.update(nextProps);

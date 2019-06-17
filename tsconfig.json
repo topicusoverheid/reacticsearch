@@ -12,6 +12,7 @@
       "es6",
       "dom"
     ],
+    "skipLibCheck": true,
     "allowJs": true,
     "baseUrl": "src/index.tsx",
     "types": [
