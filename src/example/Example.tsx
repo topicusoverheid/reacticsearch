@@ -14,7 +14,7 @@ import Indices from "./Indices";
 import NodeInfo from "./NodeInfo";
 import InlineQueryComponent from "../InlineQueryComponent";
 import InlineDocumentComponent from "../InlineDocumentComponent";
-import ElasticsearchComponent from "../ElasticsearchComponent";
+import ElasticsearchContext from "../ElasticsearchContext";
 
 const SORTS = [
     new SortItem('Relevance', undefined),
@@ -70,14 +70,6 @@ class Example extends React.Component<object, ExampleState> {
             aggregationField: '',
             documentId: undefined,
         };
-
-        // Log Elasticsearch requests
-        ElasticsearchComponent.defaultProps.onRequest = (params, options) => {
-            console.log('Elasticsearch request:', params, options);
-        };
-
-        // Set Elasticsearch request headers
-        ElasticsearchComponent.defaultProps.requestHeaders = {Authorization: 'password'};
     }
 
     getFields() {
@@ -92,17 +84,22 @@ class Example extends React.Component<object, ExampleState> {
     render() {
         var fields = this.getFields();
         return (
+            <ElasticsearchContext.Provider
+                value={{
+                    host: this.state.host,
+                    requestHeaders: {Test: 'test'},
+                }}>
             <div>
                 <h1>Host</h1>
                 <input value={this.state.host} onChange={event => {
                     this.setState({host: event.currentTarget.value});
                 }}/>
                 <br/>
-                <NodeInfo host={this.state.host}/>
+                <NodeInfo/>
                 <div>
                     Index/Type
                     <br/>
-                    <Indices host={this.state.host} onSelect={(index, type, fields) => {
+                    <Indices onSelect={(index, type, fields) => {
                         var textAggregationField;
 
                         var keys = Object.keys(fields);
@@ -279,6 +276,7 @@ class Example extends React.Component<object, ExampleState> {
                     </ReacticSearch>
                 }
             </div>
+            </ElasticsearchContext.Provider>
         );
     }
 }

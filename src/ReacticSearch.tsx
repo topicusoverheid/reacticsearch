@@ -62,14 +62,14 @@ class ReacticSearch<P extends ReacticSearchProps, S extends ReacticSearchState> 
 
     // ES search request
 
-    request(props) {
+    request(client, props) {
         var body = this.getBody();
 
         if (props.beforeSearch) {
             props.beforeSearch(body);
         }
 
-        return this.client.search({
+        return client.search({
             index: props.index,
             type: props.type,
             body: body
@@ -135,11 +135,7 @@ class ReacticSearch<P extends ReacticSearchProps, S extends ReacticSearchState> 
         });
     }
 
-    componentDidMount() {
-        this.update();
-    }
-
-    render() {
+    renderElasticsearchComponent() {
         return (
             <ReacticContext.Provider value={{reacticsearch: this}}>
                 {

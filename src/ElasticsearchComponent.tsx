@@ -1,10 +1,12 @@
 import * as React from "react";
 
-import {Client, ConfigOptions} from "elasticsearch-browser";
+import {ConfigOptions} from "elasticsearch-browser";
 import {OutgoingHttpHeaders} from "http";
+import ElasticsearchClient from "./ElasticsearchClient";
+import ElasticsearchContext, {ElasticsearchConfig} from "./ElasticsearchContext";
+import {ReactNode} from "react";
 
 export interface ElasticsearchComponentProps {
-    host: string,
     // https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/configuration.html#config-options
     clientProps?: ConfigOptions,
     requestHeaders?: OutgoingHttpHeaders,
@@ -12,6 +14,8 @@ export interface ElasticsearchComponentProps {
     onResult?: (result: any) => void,
     onError?: (error: any) => void,
     onLoadingChange?: (loading: boolean) => void,
+    style?: React.CSSProperties,
+    children?: React.ReactNode
 }
 
 export interface ElasticsearchComponentState {
@@ -22,11 +26,12 @@ export interface ElasticsearchComponentState {
 
 abstract class ElasticsearchComponent<P extends ElasticsearchComponentProps, S extends ElasticsearchComponentState> extends React.PureComponent<P, S> {
 
-    public static defaultProps: Partial<ElasticsearchComponentProps> = {
-        host: 'localhost:9200',
-    };
+    public static defaultProps: Partial<ElasticsearchComponentProps> = {};
 
-    protected client: Client;
+    static contextType = ElasticsearchContext;
+    context!: React.ContextType<typeof ElasticsearchContext>;
+
+    private client: ElasticsearchClient;
 
     constructor(props) {
         super(props);
@@ -37,46 +42,33 @@ abstract class ElasticsearchComponent<P extends ElasticsearchComponentProps, S e
             error: undefined,
             result: undefined,
         };
-
-        this.client = this.createClient();
     }
 
-    protected createClient(props : P = this.props): Client {
-        const client = new Client(
-            {
-                // @ts-ignore
+    private createClient(props: P = this.props, config: ElasticsearchConfig = this.context): ElasticsearchClient {
+        return new ElasticsearchClient({
                 ...props.clientProps,
-                host: props.host,
-            }
+                host: config.host,
+            },
+            props.onRequest,
+            {...props.requestHeaders, ...config.requestHeaders}
         );
-
-        const requestFunction = client.transport.request;
-        client.transport.request = (params, options, cb) => {
-            if (props.requestHeaders) {
-                params.headers = props.requestHeaders;
-            }
-            props.onRequest && props.onRequest(params, options);
-            return requestFunction.bind(client.transport)(params, options, cb);
-        };
-
-        return client;
     }
 
     componentDidMount() {
+        this.client = this.createClient(this.props, this.context);
         this.update();
     }
 
-    componentWillReceiveProps(nextProps: Readonly<P>, nextContext: any): void {
-        if (this.props.host !== nextProps.host || this.props.clientProps !== nextProps.clientProps) {
-            this.client.close();
-            this.client = this.createClient(nextProps);
-            this.update(nextProps);
+    componentWillReceiveProps(nextProps: Readonly<P>, nextConfig: ElasticsearchConfig): void {
+        if (this.context.host !== nextConfig.host || this.context.requestHeaders !== nextConfig.requestHeaders) {
+            this.client = this.createClient(nextProps, nextConfig);
+            this.update();
         }
     }
 
-    abstract request(props: P): Promise<any>;
+    abstract request(client: ElasticsearchClient, props: P): Promise<any>;
 
-    update(props = this.props) {
+    update(props: P = this.props) {
         var self = this;
 
         self.setState({
@@ -86,7 +78,7 @@ abstract class ElasticsearchComponent<P extends ElasticsearchComponentProps, S e
 
         props.onLoadingChange && props.onLoadingChange(true);
 
-        this.request(props).then(res => {
+        this.request(this.client, props).then(res => {
             self.setState({result: res, loading: false});
 
             props.onResult && props.onResult(res);
@@ -99,6 +91,25 @@ abstract class ElasticsearchComponent<P extends ElasticsearchComponentProps, S e
         });
     }
 
+    render(): ReactNode {
+        return (
+            <div style={this.props.style}>
+                <ElasticsearchContext.Consumer>
+                    {
+                        (config: ElasticsearchConfig) => {
+                            // this.config = config;
+                            return this.renderElasticsearchComponent();
+                        }
+                    }
+                </ElasticsearchContext.Consumer>
+            </div>
+        );
+    }
+
+    abstract renderElasticsearchComponent(): ReactNode
+
 }
+
+ElasticsearchComponent.contextType = ElasticsearchContext;
 
 export default ElasticsearchComponent;

@@ -13,11 +13,11 @@ type Item = { index: string, type: string, mapping: object };
 
 class Indices extends ElasticsearchComponent<IndicesProps, ElasticsearchComponentState> {
 
-    request(): Promise<any> {
-        return this.client.indices.get({index: '_all'});
+    request(client, props): Promise<any> {
+        return client.indices.get({index: '_all'});
     }
 
-    render() {
+    renderElasticsearchComponent() {
         if (!this.state.result) {
             return null;
         }

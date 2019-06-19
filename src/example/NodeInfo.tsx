@@ -7,11 +7,11 @@ import ElasticsearchComponent, {
 
 class NodeInfo extends ElasticsearchComponent<ElasticsearchComponentProps, ElasticsearchComponentState> {
 
-    request(): Promise<any> {
-        return this.client.info();
+    request(client, props): Promise<any> {
+        return client.info();
     }
 
-    render() {
+    renderElasticsearchComponent() {
         if (!this.state.result) {
             return null;
         }

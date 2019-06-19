@@ -19,11 +19,11 @@ abstract class DocumentComponent<P extends DocumentComponentProps, S extends Ela
         }
     }
 
-    request(props): Promise<any> {
-        return this.client.get({index: props.index, type: props.type, id: props.documentId});
+    request(client, props): Promise<any> {
+        return client.get({index: props.index, type: props.type, id: props.documentId});
     }
 
-    render() {
+    renderElasticsearchComponent() {
         var result = this.state.result;
 
         if (result) {
