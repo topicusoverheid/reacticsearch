@@ -14,7 +14,6 @@ export interface ElasticsearchComponentProps {
     onResult?: (result: any) => void,
     onError?: (error: any) => void,
     onLoadingChange?: (loading: boolean) => void,
-    style?: React.CSSProperties,
     children?: React.ReactNode
 }
 
@@ -93,16 +92,14 @@ abstract class ElasticsearchComponent<P extends ElasticsearchComponentProps, S e
 
     render(): ReactNode {
         return (
-            <div style={this.props.style}>
-                <ElasticsearchContext.Consumer>
-                    {
-                        (config: ElasticsearchConfig) => {
-                            // this.config = config;
-                            return this.renderElasticsearchComponent();
-                        }
+            <ElasticsearchContext.Consumer>
+                {
+                    (config: ElasticsearchConfig) => {
+                        // this.config = config;
+                        return this.renderElasticsearchComponent();
                     }
-                </ElasticsearchContext.Consumer>
-            </div>
+                }
+            </ElasticsearchContext.Consumer>
         );
     }
 
