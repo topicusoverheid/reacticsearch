@@ -7,29 +7,29 @@
   "repository": "http://github.com/topicusoverheid/reacticsearch",
   "main": "lib/index.js",
   "dependencies": {
-    "@types/deep-equal": "^1.0.1",
-    "@types/elasticsearch": "^5.0.33",
-    "@types/jest": "^24.0.13",
-    "@types/node": "^12.0.4",
-    "@types/qs": "^6.5.3",
-    "@types/react": "^16.8.19",
-    "@types/react-dom": "^16.8.4",
     "deep-equal": "^1.0.1",
-    "elasticsearch-browser": "^16.1.1",
+    "elasticsearch-browser": "^16.3.0",
     "qs": "^6.7.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts-ts": "^4.0.8",
-    "validator": "^11.0.0"
+    "validator": "^11.1.0"
   },
   "resolutions": {
     "@types/react": "^16.8.19",
     "@types/react-dom": "^16.8.4"
   },
   "devDependencies": {
+    "@types/deep-equal": "^1.0.1",
+    "@types/elasticsearch": "^5.0.34",
+    "@types/jest": "^24.0.15",
+    "@types/node": "^12.6.2",
+    "@types/qs": "^6.5.3",
+    "@types/react": "^16.8.23",
+    "@types/react-dom": "^16.8.4",
     "awesome-typescript-loader": "^5.2.1",
     "source-map-loader": "^0.2.4",
-    "typescript": "^3.5.1"
+    "typescript": "^3.5.3"
   },
   "scripts": {
     "build": "rm -rf lib && NODE_ENV=production tsc",
