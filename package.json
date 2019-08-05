@@ -33,10 +33,9 @@
     "typescript": "^3.5.3"
   },
   "scripts": {
-    "cleanlib": "run-script-os",
-    "cleanlib:win32": "del /f /q lib",
-    "cleanlib:default": "rm -rf lib",
-    "build": "npm run cleanlib && NODE_ENV=production tsc",
+    "build": "run-script-os",
+    "build:default": "rm -rf lib && NODE_ENV=production tsc",
+    "build:win32": "del /f /q lib && set NODE_ENV=production&& tsc",
     "postinstall": "npm run build",
     "test": "react-scripts-ts test",
     "build-example": "react-scripts-ts build",
