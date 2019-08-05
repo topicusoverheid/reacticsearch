@@ -1,6 +1,6 @@
 {
   "name": "reacticsearch",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": false,
   "author": "BenjaminFaal",
   "description": "reacticsearch is a combination of React and Elasticsearch to build Search UI's",
