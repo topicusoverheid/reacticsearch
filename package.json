@@ -9,33 +9,26 @@
   "dependencies": {
     "deep-equal": "^1.0.1",
     "elasticsearch-browser": "^16.3.0",
-    "qs": "^6.7.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-scripts-ts": "^4.0.8",
+    "qs": "^6.8.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-scripts-ts": "^3.1.0",
     "validator": "^11.1.0"
-  },
-  "resolutions": {
-    "@types/react": "^16.8.19",
-    "@types/react-dom": "^16.8.4"
   },
   "devDependencies": {
     "@types/deep-equal": "^1.0.1",
     "@types/elasticsearch": "^5.0.34",
-    "@types/jest": "^24.0.15",
-    "@types/node": "^12.6.2",
+    "@types/jest": "^24.0.18",
+    "@types/node": "^12.7.2",
     "@types/qs": "^6.5.3",
-    "@types/react": "^16.8.23",
-    "@types/react-dom": "^16.8.4",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
     "awesome-typescript-loader": "^5.2.1",
-    "run-script-os": "^1.0.7",
     "source-map-loader": "^0.2.4",
     "typescript": "^3.5.3"
   },
   "scripts": {
-    "build": "run-script-os",
-    "build:default": "rm -rf lib && NODE_ENV=production tsc",
-    "build:win32": "del /f /q lib && set NODE_ENV=production&& tsc",
+    "build": "NODE_ENV=production tsc",
     "postinstall": "npm run build",
     "test": "react-scripts-ts test",
     "build-example": "react-scripts-ts build",
