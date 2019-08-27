@@ -1,10 +1,6 @@
 {
   "compilerOptions": {
     "outDir": "lib/",
-    "sourceMap": true,
-    "strictNullChecks": true,
-    "module": "es6",
-    "moduleResolution": "node",
     "jsx": "react",
     "target": "es5",
     "lib": [
@@ -12,12 +8,7 @@
       "es6",
       "dom"
     ],
-    "skipLibCheck": true,
-    "allowJs": true,
-    "baseUrl": "src/index.tsx",
-    "types": [
-      "node"
-    ]
+    "baseUrl": "src/index.tsx"
   },
   "include": [
     "src"
