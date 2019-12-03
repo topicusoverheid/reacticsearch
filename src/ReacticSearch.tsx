@@ -24,7 +24,6 @@ export interface ReacticSearchProps extends ElasticsearchComponentProps {
 
     // es options
     index: string,
-    type: string,
 
     beforeSearch?: (body) => void
 
@@ -71,7 +70,6 @@ class ReacticSearch<P extends ReacticSearchProps, S extends ReacticSearchState> 
 
         return client.search({
             index: props.index,
-            type: props.type,
             body: body
         });
     }

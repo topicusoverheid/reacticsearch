@@ -7,7 +7,6 @@ import ElasticsearchComponent, {
 
 export interface DocumentComponentProps extends ElasticsearchComponentProps {
     index: string,
-    type: string,
     documentId: string,
 }
 

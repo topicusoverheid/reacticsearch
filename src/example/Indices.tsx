@@ -9,12 +9,12 @@ interface IndicesProps extends ElasticsearchComponentProps {
     onSelect: (index: string, type: string, mappings: []) => void;
 }
 
-type Item = { index: string, type: string, mapping: object };
+export type Item = { index: string, mapping: object };
 
 class Indices extends ElasticsearchComponent<IndicesProps, ElasticsearchComponentState> {
 
     request(client, props): Promise<any> {
-        return client.indices.get({index: '_all'});
+        return client.indices.getMapping();
     }
 
     renderElasticsearchComponent() {
@@ -22,17 +22,11 @@ class Indices extends ElasticsearchComponent<IndicesProps, ElasticsearchComponen
             return null;
         }
 
-        var items: Item[] = [];
-
-        Object.keys(this.state.result).forEach(index => {
-
-            Object.keys(this.state.result[index].mappings).forEach(mappingKey => {
-                items.push({
-                    index: index,
-                    type: mappingKey,
-                    mapping: this.state.result[index].mappings[mappingKey].properties
-                })
-            });
+        const items: Item[] = Object.keys(this.state.result).map(index => {
+            return {
+                index: index,
+                mapping: this.state.result[index].mappings.properties
+            };
         });
 
         return (
@@ -41,6 +35,8 @@ class Indices extends ElasticsearchComponent<IndicesProps, ElasticsearchComponen
 
                 if (item) {
                     this.props.onSelect(item.index, item.type, item.mapping);
+                } else {
+                    this.props.onSelect(undefined, undefined, undefined);
                 }
             }}>
                 <option selected/>
@@ -48,7 +44,7 @@ class Indices extends ElasticsearchComponent<IndicesProps, ElasticsearchComponen
                     items.map((item, index) => {
                         return (
                             <option key={index} value={index}>
-                                {item.index + '/' + item.type}
+                                {item.index}
                             </option>
                         );
                     })

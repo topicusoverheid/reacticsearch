@@ -29,7 +29,6 @@ const SORTS = [
 interface ExampleState {
     host: string
     index?: string,
-    type?: string,
     fields: object,
     aggregationField: string,
     documentId?: string
@@ -65,7 +64,6 @@ class Example extends React.Component<object, ExampleState> {
         this.state = {
             host: window.location.host,
             index: undefined,
-            type: undefined,
             fields: {},
             aggregationField: '',
             documentId: undefined,
@@ -97,9 +95,13 @@ class Example extends React.Component<object, ExampleState> {
                 <br/>
                 <NodeInfo/>
                 <div>
-                    Index/Type
+                    Index
                     <br/>
                     <Indices onSelect={(index, type, fields) => {
+                        if (!index) {
+                            this.setState({index: undefined});
+                            return;
+                        }
                         var textAggregationField;
 
                         var keys = Object.keys(fields);
@@ -113,7 +115,6 @@ class Example extends React.Component<object, ExampleState> {
 
                         this.setState({
                             index,
-                            type,
                             fields,
                             aggregationField: textAggregationField
                         }, () => {
@@ -123,11 +124,10 @@ class Example extends React.Component<object, ExampleState> {
                 </div>
                 <br/>
                 {
-                    this.state.index && this.state.type &&
+                    this.state.index &&
                     <ReacticSearch
                         ref={reacticsearch => this.reacticsearch = reacticsearch}
                         index={this.state.index}
-                        type={this.state.type}
                         debug
                         beforeSearch={body => {
                             // one can modify the body here when needed
@@ -263,7 +263,6 @@ class Example extends React.Component<object, ExampleState> {
                             </h1>
                             <InlineDocumentComponent
                                 index={this.state.index}
-                                type={this.state.type}
                                 documentId={this.state.documentId!}
                                 renderDocument={document => JSON.stringify(document)}
                                 renderNotFound={() => this.state.documentId! + ' not FOUND!'}
