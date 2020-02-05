@@ -29,7 +29,6 @@
   },
   "scripts": {
     "build": "tsc",
-    "postinstall": "npm run build",
     "build-example": "react-scripts-ts build",
     "start": "react-scripts-ts start"
   },

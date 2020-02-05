@@ -9,3 +9,15 @@ It will define a few building blocks which can be extended by any UI framework y
 ### Example
 See the reacticsearch [example](src/example) for a plain HTML implementation.
 This will give you a good starting point for implementing your own UI's.
+
+## Building
+
+    npm run build
+
+## Test installation
+
+    npm install . -g
+
+## Publish
+
+    npm publish
